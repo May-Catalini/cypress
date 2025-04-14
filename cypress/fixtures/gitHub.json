@@ -1,0 +1,7 @@
+{
+  "selectorEmail": "#login_field",
+  "selectorPassword": "#password",
+  "selectorBtn": ".position-relative > .btn",
+  "avatar": ".Button-label > .avatar",
+  "usuarioTexto": ".text-bold > .Truncate__StyledTruncate-sc-23o1d2-0"
+}
