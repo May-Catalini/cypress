@@ -3,9 +3,19 @@
 
 Cypress.Commands.add('login', ( url, selectorEmail, selectorPassword,  selectorBtn, email, password) => {
     cy.visit(url);
-    cy.get(selectorEmail).type(email);
-    cy.get(selectorPassword).type(password);
-    cy.get(selectorBtn).click(); 
+    cy.get(selectorEmail)
+        .should('be.visible')
+        .clear()
+        .type(email);
+
+    cy.get(selectorPassword)
+        .should('be.visible')
+        .clear()
+        .type(password);
+
+    cy.get(selectorBtn)
+        .should('be.visible')
+        .click(); 
   });
 
 

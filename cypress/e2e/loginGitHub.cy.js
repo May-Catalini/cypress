@@ -7,21 +7,28 @@ describe('Ingresar a Github', () => {
     const contraseña = Cypress.env('contraseña');
     const usuario_GitHub = Cypress.env('usuario_GitHub');
 
-    let gitHub;
+    let gitHubSelectors;
+
+    before(() => {
+        if (!url || !email || !contraseña || !usuario_GitHub) {
+            throw new Error('Faltan variables de entorno necesarias para ejecutar el test.');
+        }
+    });
 
     beforeEach(() => {
 
-        cy.fixture('gitHub').then((data) => {
-            gitHub = data;
+        cy.fixture('gitHub').then(({ selectorEmail, selectorPassword, selectorBtn, avatar, usuarioTexto }) => {
 
             cy.login(
                 url,
-                gitHub.selectorEmail,
-                gitHub.selectorPassword,
-                gitHub.selectorBtn,
+                selectorEmail,
+                selectorPassword,
+                selectorBtn,
                 email,
                 contraseña
             );
+
+            gitHubSelectors = { avatar, usuarioTexto };
         });
     });
 
@@ -29,13 +36,12 @@ describe('Ingresar a Github', () => {
 
         cy.url().should('include', 'github.com'); 
 
-        cy.get(gitHub.avatar).should('be.visible').click();
+        cy.get(gitHubSelectors.avatar).should('be.visible').click();
 
-        cy.get(gitHub.usuarioTexto)
+        cy.get(gitHubSelectors.usuarioTexto)
             .should('contain.text', usuario_GitHub)
             .then(() => {
                 cy.log('Usuario verificado correctamente ✅');
-                return;
             }); 
     })
 })
